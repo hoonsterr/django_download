@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+      <form action="{% url 'download:uploadFile' %}" method="POST" enctype="multipart/form-data">
+        <input type="text" name="fileTitle" placeholder="Enter a title">
+        <input type="file" name="uploadedFile"><br/>
+        {% csrf_token %}
+        <input type="submit" value="Upload">
+
+     </form>
+      <div>
+        <label>첨부 파일</label>
+        	<form action="{% url 'download:downloadFile' %}">
+        	<button type="submit">Download</button>
+    		</form>
+      </div>
+
+
+    <table>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+
+            <th>날짜 시간</th>
+            <th>다운로드</th>
+        </tr>
+        {% for file in files %}
+            <tr>
+
+                <td>{{ file.id }}</td>
+                <td>{{ file.title }}</td>
+                <td>{{ file.dateTimeOfUpload }}</td>
+                <td><a href="{{ file.uploadedFile }}" download>Download</a></td>
+
+
+            </tr>
+        {% endfor %}
+
+    </table>
+</body>
+</html>
